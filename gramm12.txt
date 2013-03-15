@@ -1,0 +1,123 @@
+  Spaces : '\s+' ;
+  lxmClass : Spaces? 'class' ;
+  lxmLeftParenth : Spaces? '\(' ;
+  lxmRightParenth : Spaces? '\)' ;
+  lxmLeftBracket : Spaces? '\[' ;
+  lxmRightBracket : Spaces? '\]' ;
+  lxmComma : Spaces? ',' ;
+  lxmColon : Spaces? ':' ;
+  lxmLeftBrace : Spaces? '\{' ;
+  lxmRightBrace : Spaces? '\}' ;
+  lxmEqual : Spaces? '=' ;
+  lxmOperator : Spaces? 'operator' ;
+  lxmIf : Spaces? 'if' ;
+  lxmStatic : Spaces? 'static' ;
+  lxmElse : Spaces? 'else' ;
+  lxmWhile : Spaces? 'while' ;
+  lxmFor : Spaces? 'for' ;
+  lxmSemicolon : Spaces? ';' ;
+  lxmDog : Spaces? '@' ;
+  lxmTilde : Spaces? '~' ;
+  lxmAmpersand : Spaces? '&' ;
+  Identifier : Spaces? '([a-z_0-9]+){r}' ;
+  Real : '[0-9]+(\.[0-9]+)?' ;
+  Script : ClassDecl+ Spaces? ;
+  ClassDecl : lxmClass Identifier lxmLeftBrace( VarDecl lxmSemicolon
+                                              | ConstructorDecl
+                                              | DestructorDecl
+                                              | FuncDecl
+                                              | OperatorDecl
+                                              | ClassDecl
+                                              )+ lxmRightBrace ;
+  Parameters : lxmLeftParenth Expr ( lxmComma Expr )* lxmRightParenth ;
+  Type : Identifier ( lxmLeftBracket '\d+'? lxmRightBracket )* ;
+  VarInit :( lxmEqual Expr
+           | Parameters
+           ) ;
+  VarDecl : lxmStatic? Type Identifier VarInit? ( lxmComma Identifier VarInit? )* ;
+  ConstructorDecl : lxmDog ParametersDecl Statements ;
+  OperatorDecl : lxmStatic? lxmOperator Operators ParametersDecl ReturnType Statements ;
+  DestructorDecl : lxmTilde ParametersDecl Statements ;
+  ReturnType : ( lxmColon Ref Type )? ;
+  FuncDecl : lxmStatic? Identifier ParametersDecl ReturnType Statements ;
+  ParametersDecl : lxmLeftParenth ( Type Ref ParamName ( lxmComma Type Ref ParamName )* )? lxmRightParenth ;
+  Ref : lxmAmpersand? ;
+  ParamName : Identifier ;
+  Statements :( lxmLeftBrace Statement* lxmRightBrace
+              | Statement
+              ) ;
+  IfStmt : lxmIf lxmLeftParenth Expr lxmRightParenth Statements lxmElse Statements ;
+  WhileStmt : lxmWhile lxmLeftParenth Expr lxmRightParenth Statements ;
+  Statement :( VarDecl lxmSemicolon
+             | Expr lxmSemicolon
+             | ForStmt
+             | IfStmt
+             | WhileStmt
+             ) ;
+  ForStmt : lxmFor lxmLeftParenth VarDecl lxmSemicolon Expr lxmSemicolon Expr lxmRightParenth Statements ;
+  Expr : AssignFactor ;
+  AssignFactor :( LogicFactor ( AssignOp LogicFactor )*
+                | lxmLeftParenth Expr lxmRightParenth
+                ) ;
+  LogicFactor :( LogicPrefixOp* CompareFactor ( LogicOp LogicPrefixOp* CompareFactor )*
+               | LogicPrefixOp* lxmLeftParenth Expr lxmRightParenth
+               ) ;
+  CompareFactor :( ArithmFactor ( CompareOp ArithmFactor )*
+                 | lxmLeftParenth Expr lxmRightParenth
+                 ) ;
+  ArithmFactor :( ArithmPrefixOp* SpecialFactor ArithmPostfixOp* ( ArithmOp ArithmPrefixOp* SpecialFactor ArithmPostfixOp* )*
+                | ArithmPrefixOp* lxmLeftParenth Expr lxmRightParenth ArithmPostfixOp*
+                ) ;
+  SpecialFactor :( Factor SpecialPostfixOp* ( SpecialOp Factor SpecialPostfixOp* )*
+                 | lxmLeftParenth Expr lxmRightParenth SpecialPostfixOp*
+                 ) ;
+  Operators :( AssignOp
+             | CompareOp
+             | LogicOp
+             | ArithmOp
+             ) ;
+  PrefixOp :( LogicPrefixOp
+            | ArithmPrefixOp
+            ) ;
+  PostfixOp :( ArithmPostfixOp
+             | SpecialPostfixOp
+             ) ;
+  AssignOp : Spaces?( '='
+                     | '\+='
+                     | '-='
+                     | '\*='
+                     | '/='
+                     | '\|='
+                     | '&='
+                     ) ;
+  LogicOp : Spaces?( '&'
+                    | '\|'
+                    ) ;
+  ArithmOp : Spaces?( '\+'
+                     | '-'
+                     | '\*'
+                     | '/'
+                     ) ;
+  CompareOp : Spaces?( '<'
+                      | '>'
+                      | '>='
+                      | '<='
+                      | '=='
+                      | '!='
+                      ) ;
+  LogicPrefixOp : Spaces? '!' ;
+  ArithmPrefixOp : Spaces?( '-'
+                           | '\+'
+                           | '\+\+'
+                           | '--'
+                           ) ;
+  ArithmPostfixOp : Spaces?( '\+\+'
+                            | '--'
+                            ) ;
+  SpecialOp : Spaces? '\.' ;
+  SpecialPostfixOp : Spaces?( lxmLeftParenth Expr lxmRightParenth
+                             | lxmLeftBracket Expr lxmRightBracket
+                             ) ;
+  Factor :( Identifier Parameters?
+          | Real
+          ) ;

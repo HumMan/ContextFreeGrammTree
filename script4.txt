@@ -1,0 +1,14 @@
+class TbaseClass
+{
+	int[0][10]  var2,v;
+	int[0]      var2,v;
+	int[0][]    var2,v,v,v,v;
+
+
+	TestFunction():&int[10][][]
+	{
+		int [10][] v;
+		a= w+a | !a<w+r*q/(g*h.a.r[t][u]*u)[w];  	
+	}
+}  
+

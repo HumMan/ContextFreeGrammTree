@@ -1,0 +1,24 @@
+class TbaseClass
+{
+	int[0][10]  var2,v;
+	int[0]      var2,v;
+	int[0][]    var2,v,v,v,v;
+	TestFunction():&int[10][][]
+	{
+		int [10][] v=2,v(1,6,6,6,2+3,w=r);	
+	}
+	TestFunction(int v, int[] v2, float[10][] v3)
+	{
+		a2=a3+w2/w2;
+		for(int i;sd>w3+r2;i+=w)
+			a2+=a3;	
+	}
+	@()
+	{
+		v=0;	
+	}
+	~()
+	{
+		v=0;	
+	}
+}

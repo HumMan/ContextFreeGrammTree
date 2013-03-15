@@ -1,0 +1,59 @@
+class TbaseClass
+{
+	class TnestedClass
+	{
+		int var1sssss;
+	}
+        class Tvec3
+        {
+                float[3] v;
+                @(float x,float y,float z)
+                {
+                        v0=x;
+                        v1=y;
+                        v2=z;
+                }
+                operator*(float f):Tvec3
+                {
+                        for(int i=0;i<3;i+=1)
+                                resultv=v+v;
+                }
+                operator+(Tvec3 v1):Tvec3
+                {
+                        for(int i=0;i<3;i+=1)
+                                resultvi=vi+v1vi;
+                }
+                operator*(Tvec3 v1):Tvec2
+                {
+                        int i=0;
+                        while(i<3)
+                        {
+                                resulti=vi*v1vi;
+                                i+=1;
+                        }
+                }
+                Length():float
+                {
+                        float t=0;
+                        for(int i=0;i<3;i+=1)
+                                t+=vi*vi;
+                        result=sqr;
+			if(x>2) t=4;
+			else {s+=5;}
+                }
+        }
+         static operator-(Tvec3 v1,Tvec3 v2):Tvec3
+        {
+                for(int i=0;i<3;i+=1)
+                        resultv=v1;
+        }
+        static int var1;
+	static int[10][] dynarrays;
+        static Main()
+        {
+                Tvec3 a(0,0,0),b(1,1,1),c;
+                float l;
+                c=a+b*l;
+        }
+}
+

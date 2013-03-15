@@ -1,0 +1,58 @@
+class TbaseClass
+{
+	class TnestedClass
+	{
+		int var1sssss;
+	}
+        class Tvec3
+        {
+                float[3] v;
+                @(float x,float y,float z)
+                {
+                        v[0]=x;
+                        v[1]=y;
+                        v[2]=z;
+                }
+                operator*(float f):Tvec3
+                {
+                        for(int i=0;i<3;i++)
+                                result.v[i]=v[i]+v.v[i];
+                }
+                operator+(Tvec3 v1):Tvec3
+                {
+                        for(int i=0;i<3;i++)
+                                result.v[i]=v[i]+v1.v[i];
+                }
+                operator*(Tvec3 v1):Tvec2
+                {
+                        int i=0;
+                        while(i<3)
+                        {
+                                result.v[i]=v[i]*v1.v[i];
+                                i+=1;
+                        }
+                }
+                Length():float
+                {
+                        float t=0;
+                        for(int i=0;i<3;i++)
+                                t+=v[i]*v[i];
+                        result=sqrt(t);
+                }
+        }
+        static operator-(Tvec3 v1,Tvec3 v2):Tvec3
+        {
+                for(int i=0;i<3;i++)
+                        result.v[i]=v1.v[i]-v2.v[i];
+        }
+        static int var1;
+	static int[10][] dyn_arrays;
+        static Main()
+        {
+                Tvec3 a(0,0,0),b(1,1,1),c;
+                float l;
+                l=b.Length;
+                c=a+b*l;
+        }
+}
+
